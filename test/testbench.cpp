@@ -6,7 +6,8 @@
 #include <iostream>
 #include <ostream>
 
-extern int test(volatile uint8_t* a, size_t n);
+extern int test1(volatile uint8_t* a, size_t n);
+extern int test2(volatile uint8_t* a, size_t n);
 
 int main()
 {
@@ -14,7 +15,7 @@ int main()
 	memset(a, 0, sizeof(a));
 	size_t n = (sizeof(a) / sizeof(int));
 
-	int result = test(reinterpret_cast<volatile uint8_t*>(a), n);
+	int result = test1(reinterpret_cast<volatile uint8_t*>(a), n);
 
 	for (auto i : a)
 		std::cout << i << ' ';

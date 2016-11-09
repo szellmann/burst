@@ -14,6 +14,10 @@ namespace burst
 namespace memory
 {
 
+//-------------------------------------------------------------------------------------------------
+// Wrapper class for memory regions
+//
+
 class region
 {
 public:
@@ -23,6 +27,7 @@ public:
 
 public:
 
+    region();
     region(volatile uint8_t* a, size_type n);
 
     template <typename T>
@@ -31,9 +36,37 @@ public:
     template <typename T>
     void deallocate(rand_iterator<T> ptr);
 
+    bool valid() const;
+
     volatile uint8_t* data;
     volatile size_type N;
 };
+
+
+//-------------------------------------------------------------------------------------------------
+// Default memory regions
+//
+
+enum region_id
+{
+	Region0,
+	Region1,
+	Region2,
+	Region4,
+	Region5,
+	Region6,
+	Region7,
+	RegionMax
+};
+
+extern region default_regions[RegionMax];
+
+
+//-------------------------------------------------------------------------------------------------
+// Initialize a default memory region
+//
+
+void init(volatile uint8_t* a, region::size_type n, region_id id = Region0);
 
 } // namespace memory
 } // namespace burst

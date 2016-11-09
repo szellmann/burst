@@ -1,6 +1,7 @@
 // This file is distributed under the MIT license.
 // See the LICENSE file for details.
 
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <cstring> // memcpy
@@ -204,6 +205,12 @@ inline void free_list_print(volatile uint8_t* mem, region::size_type N)
 
 // interface ----------------------------------------------
 
+inline region::region()
+	: data(nullptr)
+	, N(0U)
+{
+}
+
 inline region::region(volatile uint8_t* a, region::size_type n)
     : data(a)
     , N(n)
@@ -253,6 +260,24 @@ inline void region::deallocate(rand_iterator<T> ptr)
 
     if (!n3.allocated && n1 != n3)
         merge_nodes(data, n3, n1, false);
+}
+
+inline bool region::valid() const
+{
+	return data != nullptr;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+// Initialize a default memory region
+//
+
+inline void init(volatile uint8_t* a, region::size_type n, region_id id)
+{
+	assert(a != nullptr);
+	assert(id < RegionMax);
+
+	default_regions[id] = region(a, n);
 }
 
 } // namespace memory

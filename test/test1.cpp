@@ -6,7 +6,7 @@
 
 #include <burst/memory.h>
 
-int test(volatile uint8_t* a, size_t n)
+int test1(volatile uint8_t* a, size_t n)
 {
 #pragma HLS INTERFACE s_axilite port=return bundle=CTRL_BUS
 #pragma HLS INTERFACE m_axi depth=256 port=a offset=slave bundle=MASTER_BUS
