@@ -48,9 +48,9 @@ struct reference
     }
 
     reference(reference const&& rhs)
-        : value(rhs.value)
-        , index(rhs.index)
-        , raw(rhs.raw)
+        : value(std::move(rhs.value))
+        , index(std::move(rhs.index))
+        , raw(std::move(rhs.raw))
     {
 
     }
@@ -92,7 +92,7 @@ struct reference
         return *this;
     }
 
-    reference& operator=(reference&& rhs)
+    reference& operator=(reference const&& rhs)
     {
         if (&rhs != this)
         {
