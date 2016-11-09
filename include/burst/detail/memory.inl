@@ -19,6 +19,8 @@
 
 namespace burst
 {
+namespace memory
+{
 
 //enum { N = 1024 };
 
@@ -34,17 +36,17 @@ typedef node* node_ptr;
 
 struct node
 {
-    memory::size_type pos;
-    memory::size_type size;
-    memory::size_type pred_pos;
-    memory::size_type allocated;
+    region::size_type pos;
+    region::size_type size;
+    region::size_type pred_pos;
+    region::size_type allocated;
 };
 
 inline void make_node(
         volatile uint8_t* mem,
-        memory::size_type pos,
-        memory::size_type size,
-        memory::size_type pred_pos,
+        region::size_type pos,
+        region::size_type size,
+        region::size_type pred_pos,
         bool allocated
         )
 {
@@ -74,7 +76,7 @@ inline void merge_nodes(
     make_node(mem, n1.pos, n1.size + n2.size, n1.pred_pos, allocated);
 }
 
-inline node get_node(volatile uint8_t* mem, memory::size_type pos)
+inline node get_node(volatile uint8_t* mem, region::size_type pos)
 {
 #pragma HLS INLINE
     node n;
@@ -109,11 +111,11 @@ inline node prev_node(volatile uint8_t* mem, node const& n)
 inline node next_node(volatile uint8_t* mem, node const& n)
 {
 #pragma HLS INLINE
-    memory::size_type addr = n.pos + n.size;
+	region::size_type addr = n.pos + n.size;
     return get_node(mem, addr);
 }
 
-inline memory::size_type get_data_addr(node const& n)
+inline region::size_type get_data_addr(node const& n)
 {
 #pragma HLS INLINE
     return n.pos + sizeof(n);
@@ -145,17 +147,17 @@ inline std::ostream& operator<<(std::ostream& out, node n)
 
 static bool free_list_initialized = false;
 
-inline void free_list_init(volatile uint8_t* mem, memory::size_type N)
+inline void free_list_init(volatile uint8_t* mem, region::size_type N)
 {
 #pragma HLS INLINE
     make_node(mem, 0, N, 0, false);
 }
 
 
-inline node free_list_insert_first(volatile uint8_t* mem, memory::size_type size)
+inline node free_list_insert_first(volatile uint8_t* mem, region::size_type size)
 {
 #pragma HLS INLINE
-    memory::size_type addr = 0;
+	region::size_type addr = 0;
 
     node n = get_node(mem, addr);
 
@@ -184,7 +186,7 @@ inline node free_list_insert_first(volatile uint8_t* mem, memory::size_type size
 }
 
 #ifndef NDEBUG
-inline void free_list_print(volatile uint8_t* mem, memory::size_type N)
+inline void free_list_print(volatile uint8_t* mem, region::size_type N)
 {
 #ifndef __SYNTHESIS__
     node n = get_node(mem, 0);
@@ -202,14 +204,14 @@ inline void free_list_print(volatile uint8_t* mem, memory::size_type N)
 
 // interface ----------------------------------------------
 
-inline memory::memory(volatile uint8_t* a, memory::size_type n)
+inline region::region(volatile uint8_t* a, region::size_type n)
     : data(a)
     , N(n)
 {
 }
 
 template <typename T>
-inline rand_iterator<T> memory::allocate(memory::size_type n)
+inline rand_iterator<T> region::allocate(region::size_type n)
 {
     if (!free_list_initialized)
     {
@@ -218,7 +220,7 @@ inline rand_iterator<T> memory::allocate(memory::size_type n)
     }
     
     // Bytes
-    memory::size_type size = n * sizeof(T);
+    region::size_type size = n * sizeof(T);
 
     node nd = free_list_insert_first(data, size + sizeof(node));
 
@@ -229,7 +231,7 @@ inline rand_iterator<T> memory::allocate(memory::size_type n)
 }
 
 template <typename T>
-inline void memory::deallocate(rand_iterator<T> ptr)
+inline void region::deallocate(rand_iterator<T> ptr)
 {
     if (!free_list_initialized)
     {
@@ -253,4 +255,5 @@ inline void memory::deallocate(rand_iterator<T> ptr)
         merge_nodes(data, n3, n1, false);
 }
 
+} // namespace memory
 } // namespace burst

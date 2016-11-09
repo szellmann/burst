@@ -24,7 +24,7 @@ public:
 
 public:
 
-    allocator(memory mem)
+    allocator(memory::region mem)
         : mem_(mem)
     {
     }

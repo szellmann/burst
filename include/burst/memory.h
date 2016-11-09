@@ -11,8 +11,10 @@
 
 namespace burst
 {
+namespace memory
+{
 
-class memory
+class region
 {
 public:
 
@@ -21,7 +23,7 @@ public:
 
 public:
 
-    memory(volatile uint8_t* a, size_type n);
+    region(volatile uint8_t* a, size_type n);
 
     template <typename T>
     rand_iterator<T> allocate(size_type n);
@@ -33,6 +35,7 @@ public:
     volatile size_type N;
 };
 
+} // namespace memory
 } // namespace burst
 
 #include "detail/memory.inl"
