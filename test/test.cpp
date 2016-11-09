@@ -24,6 +24,7 @@ int test(volatile uint8_t* a, size_t n)
 	std::sort_heap(a_begin, a_end);
 	std::swap(a_begin[0], a_begin[1]);
 	std::fill(a_begin + 2, a_begin + 6, 23);
+	std::rotate(a_begin, a_begin + 2, a_end);
 
 	mem.deallocate(a_begin);
 
