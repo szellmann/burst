@@ -24,7 +24,7 @@ public:
     memory(volatile uint8_t* a, size_type n);
 
     template <typename T>
-    rand_iterator<T> allocate(size_type n, void* /*hint*/ = 0);
+    rand_iterator<T> allocate(size_type n);
 
     template <typename T>
     void deallocate(rand_iterator<T> ptr);

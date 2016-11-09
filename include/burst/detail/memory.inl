@@ -209,7 +209,7 @@ inline memory::memory(volatile uint8_t* a, memory::size_type n)
 }
 
 template <typename T>
-inline rand_iterator<T> memory::allocate(memory::size_type n, void*)
+inline rand_iterator<T> memory::allocate(memory::size_type n)
 {
     if (!free_list_initialized)
     {
