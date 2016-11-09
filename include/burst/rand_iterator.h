@@ -154,6 +154,12 @@ struct const_reference
     }
 };
 
+template <typename T>
+inline void swap(reference<T> a, reference<T> b)
+{
+    a.swap(b);
+}
+
 } // namespace randit
 } // namespace detail
 
@@ -322,13 +328,6 @@ private:
 };
 
 
-// TODO
-template <typename T>
-inline void swap(detail::randit::reference<T> a, detail::randit::reference<T> b)
-{
-    a.swap(b);
-}
-
 template <typename T>
 bool operator==(rand_iterator<T> a, rand_iterator<T> b)
 {
@@ -402,7 +401,7 @@ struct iterator_traits<burst::rand_iterator<T> >
 template <typename T>
 void swap(burst::detail::randit::reference<T> a, burst::detail::randit::reference<T> b)
 {
-    burst::swap(a, b);
+    burst::detail::randit::swap(a, b);
 }
 
 } // namespace std
