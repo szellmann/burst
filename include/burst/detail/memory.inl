@@ -277,7 +277,9 @@ inline rand_iterator<T> allocate(region::size_type n, region_id id)
 {
     assert(id < RegionMax);
 
-    return default_regions[id].allocate<T>(n);
+    auto reg = default_regions[id]; // Local copy, HLS seems to optimize
+                                    // this away otherwise..
+    return reg.allocate<T>(n);
 }
 
 template <typename T>
