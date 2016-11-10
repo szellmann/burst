@@ -9,7 +9,7 @@
 namespace burst
 {
 
-template <typename T>
+template <typename T, memory::region_id Id>
 class allocator
 {
 public:
@@ -24,13 +24,10 @@ public:
 
 public:
 
-    allocator(memory::region mem)
-        : mem_(mem)
-    {
-    }
+    allocator() = default;
 
     template <typename U>
-    allocator(allocator<U> const& /*rhs*/)
+    allocator(allocator<U, Id> const& /*rhs*/)
     {
         //TODO
     }
@@ -38,7 +35,7 @@ public:
     template <typename U>
     struct rebind
     {
-        typedef allocator<U> other;
+        typedef allocator<U, Id> other;
     };
 
     pointer address(reference r) const
@@ -46,9 +43,47 @@ public:
         return &r;
     }
 
-private:
+    const_pointer address(const_reference r) const
+    {
+    	return &r;
+    }
 
-    memory mem_;
+    pointer allocate(size_type n, void* /*hint*/ = 0)
+    {
+    	return memory::default_regions[Id].allocate<T>(n);
+    }
+
+    void deallocate(pointer p, size_type /*n*/)
+    {
+    	memory::default_regions[Id].deallocate(p);
+    }
+
+    size_t max_size() const
+    {
+    	return memory::default_regions[Id].N;
+    }
+
+    void construct(pointer p, const_reference val)
+    {
+
+    }
+
+    void destroy(pointer p)
+    {
+
+    }
+
+    bool operator==(allocator const& rhs) const
+    {
+        return true;
+    }
+
+    bool operator!=(allocator const& rhs) const
+    {
+        return !(*this == rhs);
+    }
+
+private:
 
 };
 

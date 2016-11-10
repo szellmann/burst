@@ -68,6 +68,17 @@ extern region default_regions[RegionMax];
 
 void init(volatile uint8_t* a, region::size_type n, region_id id = Region0);
 
+
+//-------------------------------------------------------------------------------------------------
+// Allocate/deallocate on one of the default memory regions
+//
+
+template <typename T>
+rand_iterator<T> allocate(region::size_type n, region_id id = Region0);
+
+template <typename T>
+void deallocate(rand_iterator<T> ptr, region_id id = Region0);
+
 } // namespace memory
 } // namespace burst
 

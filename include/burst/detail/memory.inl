@@ -206,8 +206,8 @@ inline void free_list_print(volatile uint8_t* mem, region::size_type N)
 // interface ----------------------------------------------
 
 inline region::region()
-	: data(nullptr)
-	, N(0U)
+    : data(nullptr)
+    , N(0)
 {
 }
 
@@ -269,15 +269,23 @@ inline bool region::valid() const
 
 
 //-------------------------------------------------------------------------------------------------
-// Initialize a default memory region
+// Allocate/deallocate on one of the default memory regions
 //
 
-inline void init(volatile uint8_t* a, region::size_type n, region_id id)
+template <typename T>
+inline rand_iterator<T> allocate(region::size_type n, region_id id)
 {
-	assert(a != nullptr);
-	assert(id < RegionMax);
+    assert(id < RegionMax);
 
-	default_regions[id] = region(a, n);
+    return default_regions[id].allocate<T>(n);
+}
+
+template <typename T>
+inline void deallocate(rand_iterator<T> ptr, region_id id)
+{
+    assert(id < RegionMax);
+
+    default_regions[id].deallocate(ptr);
 }
 
 } // namespace memory
