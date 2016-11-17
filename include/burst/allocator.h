@@ -50,12 +50,13 @@ public:
 
     pointer allocate(size_type n, void* /*hint*/ = 0)
     {
-    	return memory::default_regions[Id].allocate<T>(n);
+
+    	return memory::allocate<T>(n, Id);
     }
 
     void deallocate(pointer p, size_type /*n*/)
     {
-    	memory::default_regions[Id].deallocate(p);
+    	memory::deallocate(p, Id);
     }
 
     size_t max_size() const

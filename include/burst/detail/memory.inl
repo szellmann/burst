@@ -287,7 +287,8 @@ inline void deallocate(rand_iterator<T> ptr, region_id id)
 {
     assert(id < RegionMax);
 
-    default_regions[id].deallocate(ptr);
+    auto reg = default_regions[id];
+    reg.deallocate(ptr);
 }
 
 } // namespace memory
