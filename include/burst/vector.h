@@ -28,7 +28,10 @@ public:
 
 public:
 
+    // Construction etc. ----------------------------------
+
     vector();
+    explicit vector(size_type count);
     vector(std::initializer_list<T> init, Alloc const& alloc = Alloc());
 
     // Element access -------------------------------------
@@ -41,6 +44,15 @@ public:
     const_reference front() const;
     reference       back();
     const_reference back() const;
+
+    // Iterators ------------------------------------------
+
+    iterator        begin();
+    const_iterator  begin() const;
+    const_iterator cbegin() const;
+    iterator        end();
+    const_iterator  end() const;
+    const_iterator cend() const;
 
     // Capacity -------------------------------------------
 

@@ -11,11 +11,11 @@ extern int test2(volatile uint8_t* a, size_t n);
 
 int main()
 {
-	int a[64];
+	int a[128];
 	memset(a, 0, sizeof(a));
 	size_t n = (sizeof(a) / sizeof(int));
 
-	int result = test1(reinterpret_cast<volatile uint8_t*>(a), n);
+	int result = test2(reinterpret_cast<volatile uint8_t*>(a), n);
 
 	for (auto i : a)
 		std::cout << i << ' ';
