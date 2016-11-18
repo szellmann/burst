@@ -28,11 +28,12 @@ public:
 
 public:
 
-    // Construction etc. ----------------------------------
+    // ----------------------------------------------------
 
     vector();
     explicit vector(size_type count);
     vector(std::initializer_list<T> init, Alloc const& alloc = Alloc());
+    vector(const_iterator first, const_iterator last);
 
     // Element access -------------------------------------
 

@@ -2,6 +2,7 @@
 // See the LICENSE file for details.
 
 #include <algorithm>
+#include <iterator>
 
 namespace burst
 {
@@ -31,6 +32,18 @@ inline vector<T, Alloc>::vector(std::initializer_list<T> init, Alloc const&)
     std::copy(init.begin(), init.end(), first_);
 }
 
+template <typename T, typename Alloc>
+inline vector<T, Alloc>::vector(
+        typename vector<T, Alloc>::const_iterator first,
+        typename vector<T, Alloc>::const_iterator last
+        )
+    : size_(std::distance(first, last))
+    , capacity_(0)
+{
+    grow_by(size_);
+    std::copy(first, last, first_);
+}
+
 // Iterators ----------------------------------------------
 
 template <typename T, typename Alloc>
@@ -54,19 +67,19 @@ inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::cbegin() cons
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::iterator vector<T, Alloc>::end()
 {
-    return first_;
+    return first_ + size_;
 }
 
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
 {
-    return first_;
+    return first_ + size_;
 }
 
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::cend() const
 {
-    return first_;
+    return first_ + size_;
 }
 
 // Element access -----------------------------------------
