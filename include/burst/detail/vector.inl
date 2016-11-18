@@ -30,6 +30,7 @@ inline typename vector<T, Alloc>::reference vector<T, Alloc>::at(
         typename vector<T, Alloc>::size_type pos
         )
 {
+    // TODO: emulate "throw std::out_of_range"
     return operator[](pos);
 }
 
@@ -38,6 +39,7 @@ inline typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(
         typename vector<T, Alloc>::size_type pos
         ) const
 {
+    // TODO: emulate "throw std::out_of_range"
     return operator[](pos);
 }
 
@@ -46,7 +48,6 @@ inline typename vector<T, Alloc>::reference vector<T, Alloc>::operator[](
         typename vector<T, Alloc>::size_type pos
         )
 {
-    // TODO: emulate "throw std::out_of_range"
     return *(first_ + pos);
 }
 
@@ -55,7 +56,6 @@ inline typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[](
         typename vector<T, Alloc>::size_type pos
         ) const
 {
-    // TODO: emulate "throw std::out_of_range"
     return *(first_ + pos);
 }
 
