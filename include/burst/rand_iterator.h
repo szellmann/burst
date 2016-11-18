@@ -104,12 +104,6 @@ struct reference
         return *this;
     }
 
-    reference& operator=(T const& val)
-    {
-        reset(val);
-        return *this;
-    }
-
     operator T const&() const
     {
         return value;
@@ -127,6 +121,74 @@ struct reference
 
         reset(value_r);
         rhs.reset(value_l);
+    }
+
+    // Manipulate value -----------------------------------
+
+    reference& operator=(T const& val)
+    {
+        reset(val);
+        return *this;
+    }
+
+    reference& operator+=(T const& val)
+    {
+        reset(value + val);
+        return *this;
+    }
+
+    reference& operator-=(T const& val)
+    {
+        reset(value - val);
+        return *this;
+    }
+
+    reference& operator*=(T const& val)
+    {
+        reset(value * val);
+        return *this;
+    }
+
+    reference& operator/=(T const& val)
+    {
+        reset(value / val);
+        return *this;
+    }
+
+    reference& operator%=(T const& val)
+    {
+        reset(value % val);
+        return *this;
+    }
+
+    reference& operator<<=(T const& val)
+    {
+        reset(value << val);
+        return *this;
+    }
+
+    reference& operator>>=(T const& val)
+    {
+        reset(value >> val);
+        return *this;
+    }
+
+    reference& operator&=(T const& val)
+    {
+        reset(value & val);
+        return *this;
+    }
+
+    reference& operator^=(T const& val)
+    {
+        reset(value ^ val);
+        return *this;
+    }
+
+    reference& operator|=(T const& val)
+    {
+        reset(value | val);
+        return *this;
     }
 };
 
