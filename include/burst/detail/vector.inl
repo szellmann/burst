@@ -159,7 +159,7 @@ inline typename vector<T, Alloc>::size_type vector<T, Alloc>::size() const
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const
 {
-    return size_;
+    return size_type(-1);
 }
 
 template <typename T, typename Alloc>
