@@ -2,6 +2,7 @@
 // See the LICENSE file for details.
 
 #include <algorithm>
+#include <iterator>
 
 namespace burst
 {
@@ -14,6 +15,14 @@ inline vector<T, Alloc>::vector()
 }
 
 template <typename T, typename Alloc>
+inline vector<T, Alloc>::vector(typename vector<T, Alloc>::size_type count)
+    : size_(count)
+    , capacity_(0)
+{
+    grow_by(size_);
+}
+
+template <typename T, typename Alloc>
 inline vector<T, Alloc>::vector(std::initializer_list<T> init, Alloc const&)
     : size_(0)
     , capacity_(0)
@@ -21,6 +30,56 @@ inline vector<T, Alloc>::vector(std::initializer_list<T> init, Alloc const&)
     grow_by(init.size());
     size_ = init.size();
     std::copy(init.begin(), init.end(), first_);
+}
+
+template <typename T, typename Alloc>
+inline vector<T, Alloc>::vector(
+        typename vector<T, Alloc>::const_iterator first,
+        typename vector<T, Alloc>::const_iterator last
+        )
+    : size_(std::distance(first, last))
+    , capacity_(0)
+{
+    grow_by(size_);
+    std::copy(first, last, first_);
+}
+
+// Iterators ----------------------------------------------
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::iterator vector<T, Alloc>::begin()
+{
+    return first_;
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin() const
+{
+    return first_;
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::cbegin() const
+{
+    return first_;
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::iterator vector<T, Alloc>::end()
+{
+    return first_ + size_;
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
+{
+    return first_ + size_;
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::const_iterator vector<T, Alloc>::cend() const
+{
+    return first_ + size_;
 }
 
 // Element access -----------------------------------------
