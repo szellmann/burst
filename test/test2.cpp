@@ -18,7 +18,7 @@ int test2(volatile uint8_t* a, size_t n)
     v1.front() = 1;
     v1.back()  = 8;
 
-    for (auto it = v1.begin() + 3; it != v1.end() + 7; ++it)
+    for (auto it = v1.begin() + 3; it != v1.end() - 1; ++it)
     {
         *it += 1;
     }
