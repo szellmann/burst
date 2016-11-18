@@ -74,13 +74,13 @@ inline typename vector<T, Alloc>::const_reference vector<T, Alloc>::front() cons
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::reference vector<T, Alloc>::back()
 {
-    return *(first_ + size_);
+    return *(first_ + size_ - 1);
 }
 
 template <typename T, typename Alloc>
 inline typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
 {
-    return *(first_ + size_);
+    return *(first_ + size_ - 1);
 }
 
 // Capacity -----------------------------------------------
