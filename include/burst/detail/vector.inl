@@ -165,6 +165,13 @@ inline typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const
 template <typename T, typename Alloc>
 inline void vector<T, Alloc>::reserve(typename vector<T, Alloc>::size_type new_cap)
 {
+    grow_by(new_cap - capacity_);
+}
+
+template <typename T, typename Alloc>
+inline typename vector<T, Alloc>::size_type vector<T, Alloc>::capacity() const
+{
+    return capacity_;
 }
 
 // Modifiers ----------------------------------------------
