@@ -194,7 +194,7 @@ inline void vector<T, Alloc>::grow_by(typename vector<T, Alloc>::size_type s)
     }
     else
     {
-        auto tmp = alloc.allocate(s);
+        auto tmp = alloc.allocate(capacity_ + s);
         std::copy(first_, first_ + size_, tmp);
         alloc.deallocate(first_, capacity_);
         first_ = tmp;
