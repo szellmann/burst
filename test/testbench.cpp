@@ -7,11 +7,10 @@
 #include <ostream>
 
 extern int test1(volatile uint8_t* a, size_t n);
-extern int test2(volatile uint8_t* a, size_t n);
 
 int main()
 {
-	int a[64];
+	int a[256];
 	memset(a, 0, sizeof(a));
 	size_t n = (sizeof(a) / sizeof(int));
 

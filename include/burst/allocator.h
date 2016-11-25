@@ -8,7 +8,6 @@
 
 namespace burst
 {
-
 template <typename T, memory::region_id Id>
 class allocator
 {
@@ -51,17 +50,17 @@ public:
     pointer allocate(size_type n, void* /*hint*/ = 0)
     {
 
-    	return memory::allocate<T>(n, Id);
+    	return mem.allocate<T>(n, Id);
     }
 
     void deallocate(pointer p, size_type /*n*/)
     {
-    	memory::deallocate(p, Id);
+    	mem.deallocate(p, Id);
     }
 
     size_t max_size() const
     {
-    	return memory::default_regions[Id].N;
+    	return mem.N[Id];
     }
 
     void construct(pointer p, const_reference val)
@@ -86,6 +85,7 @@ public:
 
 private:
 
+    memory mem;
 };
 
 } // namespace burst
