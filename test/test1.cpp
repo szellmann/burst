@@ -28,10 +28,7 @@ int test1(volatile uint8_t* a, size_t n)
     std::fill(a_begin + 2, a_begin + 6, 23);
     std::rotate(a_begin, a_begin + 2, a_end);
 
-    auto b_begin = mem.allocate<int>(4);
-
     mem.deallocate(a_begin);
-    mem.deallocate(b_begin);
 
     return 0;
 }
