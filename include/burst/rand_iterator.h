@@ -73,7 +73,7 @@ struct reference
 //                    );
         for (int i = 0; i < stride; ++i)
         {
-            //#pragma HLS PIPELINE
+            #pragma HLS PIPELINE
             uint8_t tmp = (value >> (i * 8)) & 0xFF;
 
             raw[index * stride + i] = tmp;
@@ -297,7 +297,7 @@ public:
 //                );
         for (int i = 0; i < stride; ++i)
         {
-            //#pragma HLS PIPELINE
+            #pragma HLS PIPELINE
             T val = raw_[(pos_ + n) * stride + i] << (i * 8);
             result.value += val;
         }
@@ -321,7 +321,7 @@ public:
 //                );
         for (int i = 0; i < stride; ++i)
         {
-            //#pragma HLS PIPELINE
+            #pragma HLS PIPELINE
             T val = raw_[(pos_ + n) * stride + i] << (i * 8);
             result.value += val;
         }

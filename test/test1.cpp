@@ -9,12 +9,12 @@
 int test1(volatile uint8_t* a, size_t n)
 {
 #pragma HLS INTERFACE s_axilite port=return bundle=CTRL_BUS
-#pragma HLS INTERFACE m_axi depth=512 port=a offset=slave bundle=MASTER_BUS
+#pragma HLS INTERFACE m_axi depth=256 port=a offset=slave bundle=MASTER_BUS
 #pragma HLS INTERFACE s_axilite port=n bundle=CTRL_BUS
 
-    burst::memory mem(a, n);
+    burst::memory::init(a, n);
 
-    auto a_begin = mem.allocate<int>(8);
+    auto a_begin = burst::memory::allocate<int>(8);
     auto a_end = a_begin + 8;
 
     std::fill(a_begin, a_end, 24);
@@ -28,10 +28,7 @@ int test1(volatile uint8_t* a, size_t n)
     std::fill(a_begin + 2, a_begin + 6, 23);
     std::rotate(a_begin, a_begin + 2, a_end);
 
-    auto b_begin = mem.allocate<int>(4);
-
-    mem.deallocate(a_begin);
-    mem.deallocate(b_begin);
+    burst::memory::deallocate(a_begin);
 
     return 0;
 }
