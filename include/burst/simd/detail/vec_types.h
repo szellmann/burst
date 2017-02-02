@@ -136,9 +136,10 @@ FORCEINLINE I1 convert_up(I2 const& a)
     auto shift = sizeof(typename I2::value_type) * 8;
 
     I1 result;
+    typedef typename std::make_unsigned<typename I2::value_type>::type UI2;
     for (int i = 0; i < I2::N; i += stride)
     {
-        result.value[i / stride] = a.value[i + stride - 1];
+        result.value[i / stride] = UI2(a.value[i + stride - 1]);
         for (int j = 1; j < stride; ++j)
         {
 #if SIMD_LITTLE_ENDIAN
@@ -146,7 +147,7 @@ FORCEINLINE I1 convert_up(I2 const& a)
 #else
             result.value[i / stride] >>= shift;
 #endif
-            result.value[i / stride] |= a.value[i + stride - j - 1];
+            result.value[i / stride] |= UI2(a.value[i + stride - j - 1]);
         }
     }
 
